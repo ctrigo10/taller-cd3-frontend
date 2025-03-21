@@ -43,7 +43,7 @@ const FileUploadForm: React.FC<FileUploadFormProps> = ({ onFileUpload }) => {
     const apiUrl = Constants.apiBaseUrl;
     try {
       const response = await axios.post(
-        `${apiUrl}/api/documents/upload`,
+        `${apiUrl}/documents/upload`,
         formData,
         {
           headers: {

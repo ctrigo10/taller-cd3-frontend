@@ -20,9 +20,9 @@ const Login: React.FC = () => {
 
     // Simulación de la solicitud al backend
     try {
-      const response = await axios.post(`${apiUrl}/api/auth/signin`, {
+      const response = await axios.post(`${apiUrl}/auth/signin`, {
         username,
-        password
+        password,
       });
 
       if (!response.data) {
@@ -75,6 +75,18 @@ const Login: React.FC = () => {
             Iniciar Sesión
           </Button>
         </Box>
+
+        <Button
+          color="secondary"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3 }}
+          onClick={() => {
+            window.location.href = `${Constants.apiBaseUrl}/auth/ciudadania`
+          }}
+        >
+          Iniciar Sesión con Ciudadanía Digital
+        </Button>
       </Box>
     </Container>
   );
