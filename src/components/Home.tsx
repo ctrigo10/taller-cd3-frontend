@@ -20,9 +20,22 @@ const Home: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const apiUrl = Constants.apiBaseUrl;
 
-  const handleLogout = (): void => {
+  const handleLogout = async () => {
     logout(); // Eliminamos el token y cerramos sesión
+    try {
+      const response = await axios.get(`${apiUrl}/auth/logout`, {
+        withCredentials: true,
+      });
+      if (!response.data.link) {
+        throw new Error('Error');
+      }
+      window.location.href = response.data.link
+
+    } catch (error) {
+      console.log(error);
+    }
     navigate('/');
   };
 
@@ -46,7 +59,6 @@ const Home: React.FC = () => {
     setMessage(''); // Limpiar mensaje anterior
 
     try {
-      const apiUrl = Constants.apiBaseUrl;
       const response = await axios.post(
         `${apiUrl}/documents/upload`,
         formData,
@@ -59,9 +71,8 @@ const Home: React.FC = () => {
       );
       console.log('respuesta', response.data.datos);
       if (response.data.datos.link) {
-        window.location.href = response.data.datos.link
-      }
-      else {
+        window.location.href = response.data.datos.link;
+      } else {
         setMessage('Error al generar el link del documento.');
       }
     } catch (err) {
@@ -97,9 +108,17 @@ const Home: React.FC = () => {
           </Button>
           {message && <Box mt={2}>{message}</Box>}
         </Box>
-        <Button variant="contained" color="secondary" onClick={handleLogout}>
-          Cerrar sesión
-        </Button>
+        <Box
+          display="flex"
+          mt={5}
+          flexDirection="column"
+          alignItems="center"
+          gap={2}
+        >
+          <Button variant="contained" color="secondary" onClick={handleLogout}>
+            Cerrar sesión
+          </Button>
+        </Box>
       </Box>
     </Container>
   );
