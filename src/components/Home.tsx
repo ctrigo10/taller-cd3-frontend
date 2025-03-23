@@ -57,8 +57,13 @@ const Home: React.FC = () => {
           withCredentials: true,
         }
       );
-      console.log('respuesta', response.data);
-      setMessage('Archivo subido correctamente.');
+      console.log('respuesta', response.data.datos);
+      if (response.data.datos.link) {
+        window.location.href = response.data.datos.link
+      }
+      else {
+        setMessage('Error al generar el link del documento.');
+      }
     } catch (err) {
       console.error(err);
       setMessage('Error al subir el archivo.');

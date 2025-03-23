@@ -25,7 +25,7 @@ const Callback: React.FC = () => {
       });
 
       console.log('[Callback] Respuesta recibida:', response.data);
-      if (!response.data) {
+      if (!response.data.accessToken) {
         throw new Error('Credenciales incorrectas');
       }
 
