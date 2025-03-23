@@ -20,7 +20,7 @@ const Login: React.FC = () => {
 
     // Simulación de la solicitud al backend
     try {
-      const response = await axios.post(`${apiUrl}/api/auth/signin`, {
+      const response = await axios.post(`${apiUrl}/auth/signin`, {
         username,
         password
       });
